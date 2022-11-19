@@ -5,7 +5,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
@@ -68,8 +68,7 @@ const Drawer = styled(MuiDrawer, {
 
 function Nav() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [open, setOpen] = useState(!isMobile);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -112,7 +111,7 @@ function Nav() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
           >
-            <MenuIcon />
+            <MenuRoundedIcon />
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -140,8 +139,8 @@ function Nav() {
             </ListItem>
           ))}
         </List>
-        <List sx={{ mt: "auto", p: 1, minHeight: 60 }}>
-          <Divider />
+        <Divider sx={{flexGrow: 1}} />
+        <List sx={{ mt: "auto", minHeight: 60 }}>
           <ListItem
             key="themeButton"
             disablePadding
