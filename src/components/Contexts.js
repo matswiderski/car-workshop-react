@@ -4,7 +4,6 @@ export const PageContext = createContext({currentPageName: "", setCurrentPageNam
 
 export const PageContextProvider = ({ children }) => {
   const [currentPageName, setCurrentPageName] = useState(null);
-
   return (
     <PageContext.Provider value={{ currentPageName, setCurrentPageName }}>
       {children}

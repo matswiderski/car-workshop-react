@@ -34,7 +34,7 @@ function TopBar() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNotifications, setAnchorElNotifications] = useState(null);
   const theme = useTheme();
-  const pageContext = useContext(PageContext)
+  const pageContext = useContext(PageContext);
   return (
     <>
       <Box
@@ -54,6 +54,7 @@ function TopBar() {
           }}
         >
           <Typography
+            id="page-name"
             variant="h5"
             noWrap
             sx={{
@@ -110,7 +111,7 @@ function TopBar() {
               </MenuItem>
             ))}
           </Menu>
-          <Tooltip title="Open settings">
+          <Tooltip title="Profile details">
             <IconButton onClick={handleOpenUserMenu}>
               <Avatar
                 sx={{

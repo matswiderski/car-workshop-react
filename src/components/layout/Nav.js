@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ListItem from "@mui/material/ListItem";
-
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -19,7 +18,6 @@ import ThemeButton from "./ThemeButton";
 import NavItem from "./NavItem";
 import Dashboard from "../pages/Dashboard";
 import FindWorkshop from "../pages/FindWorkshop";
-import { PageContext } from "../Contexts";
 
 const drawerWidth = 220;
 
@@ -71,16 +69,19 @@ const Drawer = styled(MuiDrawer, {
 function Nav() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
+    const pageName = document.getElementById("page-name");
+    pageName.style.opacity = 0;
+    pageName.style.transition = "all 0.2s ease-out"
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    const pageName = document.getElementById("page-name");
+    pageName.style.opacity = 1;
+    pageName.style.transition = "all 0.1s ease-in"
   };
-
-
 
   return (
     <Router>
@@ -125,18 +126,10 @@ function Nav() {
           </DrawerHeader>
           <Divider sx={{ mx: 1 }} />
           <List>
-            <NavItem
-              path="/dashboard"
-              text="Dashboard"
-              open={open}
-            >
+            <NavItem path="/dashboard" text="Dashboard" open={open}>
               <HomeRoundedIcon sx={{ fontSize: 20 }} />
             </NavItem>
-            <NavItem
-              path="/find"
-              text="Find workshop"
-              open={open}
-            >
+            <NavItem path="/find" text="Find workshop" open={open}>
               <HomeRepairServiceRoundedIcon sx={{ fontSize: 20 }} />
             </NavItem>
           </List>
@@ -154,7 +147,10 @@ function Nav() {
       </Box>
       <Routes>
         <Route path="/dashboard" element={<Dashboard pageName="Dashboard" />} />
-        <Route path="/find" element={<FindWorkshop pageName="Find workshop" />} />
+        <Route
+          path="/find"
+          element={<FindWorkshop pageName="Find workshop" />}
+        />
       </Routes>
     </Router>
   );
