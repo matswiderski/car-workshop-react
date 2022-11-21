@@ -6,6 +6,9 @@
   padding: 25px;
   text-align: center;
 }
+.summary-card .icon {
+  font-size: 45px;
+}
 
 .MuiPaper-root.summary-card.total-spent {
   background-color: #e76f51;

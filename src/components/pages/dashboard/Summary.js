@@ -1,18 +1,19 @@
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import HardwareRoundedIcon from "@mui/icons-material/HardwareRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 
 import "./css/Styles.css";
-import { Typography } from "@mui/material";
 
 function Summary() {
   return (
     <>
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="summary-card total-spent">
-          <AttachMoneyRoundedIcon sx={{fontSize: 40}} />
+          <AttachMoneyRoundedIcon className="icon" />
           <div className="card-content">
             <Typography variant="h5">37215</Typography>
             <span>Total cost of repairs</span>
@@ -21,7 +22,7 @@ function Summary() {
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="summary-card max-spent">
-          <AttachMoneyRoundedIcon sx={{fontSize: 40}} />
+          <AttachMoneyRoundedIcon className="icon" />
           <div className="card-content">
             <Typography variant="h5">420</Typography>
             <span>Most expensive repair</span>
@@ -30,7 +31,7 @@ function Summary() {
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="summary-card total-repairs">
-          <HardwareRoundedIcon sx={{fontSize: 40}} />
+          <HardwareRoundedIcon className="icon" />
           <div className="card-content">
             <Typography variant="h5">69</Typography>
             <span>Repairs in total</span>
@@ -39,7 +40,7 @@ function Summary() {
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="summary-card last-repair">
-          <CalendarMonthRoundedIcon sx={{fontSize: 40}} />
+          <CalendarMonthRoundedIcon className="icon" />
           <div className="card-content">
             <Typography variant="h5">2022-02-29</Typography>
             <span>Date of last repair</span>
