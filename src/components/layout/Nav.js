@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ListItem from "@mui/material/ListItem";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
@@ -16,8 +16,6 @@ import HomeRepairServiceRoundedIcon from "@mui/icons-material/HomeRepairServiceR
 
 import ThemeButton from "./ThemeButton";
 import NavItem from "./NavItem";
-import Dashboard from "../pages/Dashboard";
-import FindWorkshop from "../pages/FindWorkshop";
 
 const drawerWidth = 220;
 
@@ -84,7 +82,6 @@ function Nav() {
   };
 
   return (
-    <Router>
       <Box sx={{ display: "flex" }}>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader
@@ -145,14 +142,6 @@ function Nav() {
           </List>
         </Drawer>
       </Box>
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard pageName="Dashboard" />} />
-        <Route
-          path="/find"
-          element={<FindWorkshop pageName="Find workshop" />}
-        />
-      </Routes>
-    </Router>
   );
 }
 export default Nav;

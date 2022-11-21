@@ -1,0 +1,27 @@
+.MuiPaper-root {
+  padding: 25px;
+  text-align: center;
+}
+.card-content{
+    margin-top: 20px;
+}
+
+.MuiPaper-root.summary-card-total-spent {
+  background-color: #e76f51;
+  color: #743829;
+}
+
+.MuiPaper-root.summary-card-total-repairs {
+  background-color: #e9c46a;
+  color: #756235;
+}
+
+.MuiPaper-root.summary-card-max-spent {
+  background-color: #f4a261;
+  color: #7a5131;
+}
+
+.MuiPaper-root.summary-card-last-repair {
+  background-color: #2a9d8f;
+  color: #154f48;
+}
