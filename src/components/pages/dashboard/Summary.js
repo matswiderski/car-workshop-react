@@ -11,7 +11,7 @@ function Summary() {
   return (
     <>
       <Grid item xs={12} sm={6} md={3}>
-        <Paper className="summary-card-total-spent">
+        <Paper className="summary-card total-spent">
           <AttachMoneyRoundedIcon sx={{fontSize: 40}} />
           <div className="card-content">
             <Typography variant="h5">37215</Typography>
@@ -20,7 +20,7 @@ function Summary() {
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
-        <Paper className="summary-card-max-spent">
+        <Paper className="summary-card max-spent">
           <AttachMoneyRoundedIcon sx={{fontSize: 40}} />
           <div className="card-content">
             <Typography variant="h5">420</Typography>
@@ -29,7 +29,7 @@ function Summary() {
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
-        <Paper className="summary-card-total-repairs">
+        <Paper className="summary-card total-repairs">
           <HardwareRoundedIcon sx={{fontSize: 40}} />
           <div className="card-content">
             <Typography variant="h5">69</Typography>
@@ -38,7 +38,7 @@ function Summary() {
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
-        <Paper className="summary-card-last-repair">
+        <Paper className="summary-card last-repair">
           <CalendarMonthRoundedIcon sx={{fontSize: 40}} />
           <div className="card-content">
             <Typography variant="h5">2022-02-29</Typography>
