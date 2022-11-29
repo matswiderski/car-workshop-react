@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ListItem from "@mui/material/ListItem";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
@@ -16,8 +16,6 @@ import HomeRepairServiceRoundedIcon from "@mui/icons-material/HomeRepairServiceR
 
 import ThemeButton from "./ThemeButton";
 import NavItem from "./NavItem";
-import Dashboard from "../pages/Dashboard";
-import FindWorkshop from "../pages/FindWorkshop";
 
 const drawerWidth = 220;
 
@@ -73,86 +71,77 @@ function Nav() {
     setOpen(true);
     const pageName = document.getElementById("page-name");
     pageName.style.opacity = 0;
-    pageName.style.transition = "all 0.2s ease-out"
+    pageName.style.transition = "all 0.2s ease-out";
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
     const pageName = document.getElementById("page-name");
     pageName.style.opacity = 1;
-    pageName.style.transition = "all 0.1s ease-in"
+    pageName.style.transition = "all 0.1s ease-in";
   };
 
   return (
-    <Router>
-      <Box sx={{ display: "flex" }}>
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader
-            sx={{
-              ...(!open && { display: "none" }),
-              minHeight: 60,
-            }}
-          >
-            <Box sx={{ mx: "auto", p: 0.5 }}>
-              <Link
-                to="/dashboard"
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                }}
-              >
-                <ConstructionRoundedIcon sx={{ fontSize: 40 }} />
-              </Link>
-            </Box>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftRoundedIcon sx={{ fontSize: 30 }} />
-            </IconButton>
-          </DrawerHeader>
-          <DrawerHeader
-            sx={{
-              ...(open && { display: "none" }),
-              justifyContent: "center",
-              p: 0.5,
-              minHeight: 60,
-            }}
-          >
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
+    <Box sx={{ display: "flex" }}>
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader
+          sx={{
+            ...(!open && { display: "none" }),
+            minHeight: 60,
+          }}
+        >
+          <Box sx={{ mx: "auto", p: 0.5 }}>
+            <Link
+              to="/dashboard"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
             >
-              <MenuRoundedIcon />
-            </IconButton>
-          </DrawerHeader>
-          <Divider sx={{ mx: 1 }} />
-          <List>
-            <NavItem path="/dashboard" text="Dashboard" open={open}>
-              <HomeRoundedIcon sx={{ fontSize: 20 }} />
-            </NavItem>
-            <NavItem path="/find" text="Find workshop" open={open}>
-              <HomeRepairServiceRoundedIcon sx={{ fontSize: 20 }} />
-            </NavItem>
-          </List>
-          <Divider sx={{ flexGrow: 1, mx: 1 }} />
-          <List sx={{ mt: "auto", minHeight: 60 }}>
-            <ListItem
-              key="themeButton"
-              disablePadding
-              sx={{ display: "block", textAlign: "center" }}
-            >
-              <ThemeButton />
-            </ListItem>
-          </List>
-        </Drawer>
-      </Box>
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard pageName="Dashboard" />} />
-        <Route
-          path="/find"
-          element={<FindWorkshop pageName="Find workshop" />}
-        />
-      </Routes>
-    </Router>
+              <ConstructionRoundedIcon sx={{ fontSize: 40 }} />
+            </Link>
+          </Box>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftRoundedIcon sx={{ fontSize: 30 }} />
+          </IconButton>
+        </DrawerHeader>
+        <DrawerHeader
+          sx={{
+            ...(open && { display: "none" }),
+            justifyContent: "center",
+            p: 0.5,
+            minHeight: 60,
+          }}
+        >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+          >
+            <MenuRoundedIcon />
+          </IconButton>
+        </DrawerHeader>
+        <Divider sx={{ mx: 1 }} />
+        <List>
+          <NavItem path="/dashboard" text="Dashboard" open={open}>
+            <HomeRoundedIcon sx={{ fontSize: 20 }} />
+          </NavItem>
+          <NavItem path="/find" text="Find workshop" open={open}>
+            <HomeRepairServiceRoundedIcon sx={{ fontSize: 20 }} />
+          </NavItem>
+        </List>
+        <Divider sx={{ flexGrow: 1, mx: 1 }} />
+        <List sx={{ mt: "auto", minHeight: 60 }}>
+          <ListItem
+            key="themeButton"
+            disablePadding
+            sx={{ display: "block", textAlign: "center" }}
+          >
+            <ThemeButton />
+          </ListItem>
+        </List>
+      </Drawer>
+    </Box>
   );
 }
 export default Nav;

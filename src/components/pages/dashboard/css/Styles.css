@@ -1,0 +1,55 @@
+/* SUmmary */
+.MuiPaper-root.summary-card.total-spent {
+  background-color: #e76f51;
+  color: #743829;
+}
+
+.MuiPaper-root.summary-card.total-repairs {
+  background-color: #e9c46a;
+  color: #756235;
+}
+
+.MuiPaper-root.summary-card.max-spent {
+  background-color: #f4a261;
+  color: #7a5131;
+}
+
+.MuiPaper-root.summary-card.last-repair {
+  background-color: #2a9d8f;
+  color: #154f48;
+}
+
+.MuiPaper-root.summary-card.summary-card {
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.summary-card .icon {
+  font-size: 45px;
+}
+
+.summary-card .card-text {
+  margin-top: 15px;
+}
+
+/* History */
+.history-date-wrapper {
+  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.history-date-wrapper .history-date {
+  flex-direction: column;
+  justify-content: center;
+}
+.history-date-wrapper .date-year,
+.date-month-day {
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.history-details .category{
+  font-size: 10px;
+}
