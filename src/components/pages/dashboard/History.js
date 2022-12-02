@@ -44,7 +44,7 @@ function History() {
   return (
     <List disablePadding>
       {data.map((item, index) => (
-        <>
+        <div key={index}>
           <ListItem sx={{ px: 0 }}>
             <ListItemButton>
               <ListItemIcon>
@@ -53,8 +53,8 @@ function History() {
               <HistoryDetails title={item.title} category={item.category} />
             </ListItemButton>
           </ListItem>
-          {index != data.length - 1 && <Divider />}
-        </>
+          {index !== data.length - 1 && <Divider />}
+        </div>
       ))}
     </List>
   );

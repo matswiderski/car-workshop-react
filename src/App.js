@@ -1,54 +1,59 @@
 import { ThemeProvider } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+
 import CssBaseline from "@mui/material/CssBaseline";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "@fontsource/roboto/400.css";
 
-import { ThemeMode, ThemeContext } from "./components/layout/Theme";
-import { PageContextProvider } from "./components/Contexts";
-import TopBar from "./components/layout/TopBar";
-import Nav from "./components/layout/Nav";
-import Footer from "./components/layout/Footer";
+import { ThemeMode, ThemeContext } from "./components/layout/appLayout/Theme";
+import { PageContextProvider } from "./context/PageContext";
+import { AuthContextProvider } from "./context/AuthContext";
+
 import Dashboard from "./components/pages/dashboard/Dashboard";
 import FindWorkshop from "./components/pages/FindWorkshop";
+import AppLayout from "./components/layout/appLayout/AppLayout";
+import AuthLayout from "./components/layout/authLayout/AuthLayout";
+import Login from "./components/pages/login/Login";
+import Signin from "./components/pages/login/Signin";
+import NoMatch from "./components/layout/NoMatch";
+import RequireAuth from "./components/RequireAuth";
+import UserDetails from "./components/pages/UserDetails/UserDetails";
 
 function App() {
   const [theme, colorMode] = ThemeMode();
   return (
     <ThemeProvider theme={theme}>
       <ThemeContext.Provider value={colorMode}>
-        <PageContextProvider>
-          <Router>
-            <Nav />
-            <Box id="content"
-              sx={{
-                ml: `calc(${theme.spacing(7)} + 30px)`,
-                mr: "30px",
-                [theme.breakpoints.up("sm")]: {
-                  ml: `calc(${theme.spacing(8)} + 30px)`,
-                },
-              }}
-            >
-              <TopBar />
-              <Grid container spacing={2}>
-                <Routes>
-                  <Route
-                    path="/dashboard"
-                    element={<Dashboard pageName="Dashboard" />}
-                  />
-                  <Route
-                    path="/find"
-                    element={<FindWorkshop pageName="Find workshop" />}
-                  />
-                </Routes>
-              </Grid>
-            </Box>
-          </Router>
-        </PageContextProvider>
+        <AuthContextProvider>
+          <PageContextProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route element={<RequireAuth />}>
+                  <Route element={<AppLayout />}>
+                    <Route
+                      path="dashboard"
+                      element={<Dashboard pageName="Dashboard" />}
+                    />
+                    <Route
+                      path="/find"
+                      element={<FindWorkshop pageName="Find workshop" />}
+                    />
+                    <Route
+                      path="/user"
+                      element={<UserDetails pageName="User details" />}
+                    />
+                  </Route>
+                </Route>
+                <Route element={<AuthLayout />}>
+                  <Route path="/" element={<Login />} />
+                  <Route path="/signin" element={<Signin />} />
+                </Route>
+                <Route path="*" element={<NoMatch />} />
+              </Routes>
+            </BrowserRouter>
+          </PageContextProvider>
+        </AuthContextProvider>
       </ThemeContext.Provider>
       <CssBaseline />
-      {/* <Footer /> */}
     </ThemeProvider>
   );
 }

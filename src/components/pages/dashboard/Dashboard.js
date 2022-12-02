@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import {
   Chart as ChartJS,
@@ -14,10 +14,10 @@ import {
 } from "chart.js";
 import { Doughnut, Line, Bar } from "react-chartjs-2";
 
-import { PageContext } from "../../Contexts";
 import Summary from "./Summary";
 import History from "./History";
 import "./css/Styles.css"
+import usePage from "../../hooks/usePage";
 
 ChartJS.register(
   ArcElement,
@@ -113,10 +113,10 @@ const dataBar = {
 };
 
 function Dashboard(props) {
-  const pageContext = useContext(PageContext);
+  const page = usePage();
   useEffect(() => {
-    pageContext.setCurrentPageName(props.pageName);
-  }, [pageContext.currentPageName]);
+    page.setCurrentPageName(props.pageName);
+  }, [page.currentPageName]);
   return (
     <>
       <Summary />
