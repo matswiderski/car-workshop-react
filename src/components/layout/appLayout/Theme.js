@@ -5,9 +5,9 @@ const colors = (mode) => {
   if (mode === "dark") {
     return {
       primary: {
-        main: "#5998C5",
-        light: "#3E6A8A",
-        dark: "#8BB7D6",
+        main: "#ff6384",
+        light: "#ff92a9",
+        dark: "#b3455c",
       },
       secondary: {
         main: "#FFF689",
