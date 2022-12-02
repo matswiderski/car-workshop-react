@@ -13,7 +13,7 @@ import FindWorkshop from "./components/pages/FindWorkshop";
 import AppLayout from "./components/layout/appLayout/AppLayout";
 import AuthLayout from "./components/layout/authLayout/AuthLayout";
 import Login from "./components/pages/auth/Login";
-import Signin from "./components/pages/auth/Signin";
+import Register from "./components/pages/auth/Register"
 import NoMatch from "./components/layout/NoMatch";
 import RequireAuth from "./components/RequireAuth";
 import UserDetails from "./components/pages/UserDetails/UserDetails";
@@ -45,7 +45,7 @@ function App() {
                 </Route>
                 <Route element={<AuthLayout />}>
                   <Route path="/" element={<Login />} />
-                  <Route path="/signin" element={<Signin />} />
+                  <Route path="/signup" element={<Register />} />
                 </Route>
                 <Route path="*" element={<NoMatch />} />
               </Routes>

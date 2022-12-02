@@ -6,7 +6,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Link from "@mui/material/Link";
 
 export default function TransitionsModal() {
   const [open, setOpen] = useState(false);
@@ -21,7 +20,6 @@ export default function TransitionsModal() {
   return (
     <div>
       <Button
-        component={Link}
         onClick={handleClickOpen}
         sx={{ p: 0, color: "primary.main", textTransform: "none" }}
       >
@@ -31,7 +29,7 @@ export default function TransitionsModal() {
         <DialogTitle>Account recovery</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter the e-mail address associated with the account
+            Enter e-mail address associated with the account
           </DialogContentText>
           <TextField
             autoFocus

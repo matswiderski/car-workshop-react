@@ -2,6 +2,7 @@ import React from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+import Box from "@mui/material/Box";
 export default function MouseOverPopover() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -22,7 +23,7 @@ export default function MouseOverPopover() {
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
-        sx={{mx: "12px"}}
+        sx={{ mx: "12px" }}
       />
       <Popover
         id="mouse-over-popover"
@@ -42,13 +43,14 @@ export default function MouseOverPopover() {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography sx={{ p: 1 }}>
-          <Typography sx={{ p: 1 }}>For testing purposes please use</Typography>
+        <Box sx={{ p: 1 }}>
+          <Typography sx={{ p: 1, textAlign: "center" }}>For testing purposes please use</Typography>
           <ul>
             <li>E-mail: "user@user.com"</li>
             <li>Password: "Password1!"</li>
           </ul>
-        </Typography>
+          <Typography sx={{ p: 1, textAlign: "center" }}>without quotation marks</Typography>
+        </Box>
       </Popover>
     </div>
   );

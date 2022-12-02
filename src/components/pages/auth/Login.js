@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Button from "@mui/material/Button";
 import axios from "../../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -11,11 +11,11 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
 import Info from "./Info";
-
+import Grow from "@mui/material/Grow";
 import ForgotPassword from "./ForgotPassword";
 function Login() {
   const [loading, setLoading] = useState(false);
@@ -60,7 +60,11 @@ function Login() {
   };
 
   return (
-    <>
+    <Grow
+      in={true}
+      style={{ transformOrigin: "0 1 0" }}
+      {...(true ? { timeout: 400 } : {})}
+    >
       <Box component="form" onSubmit={handleSubmit}>
         <Avatar className="lock" sx={{ mx: "auto" }}>
           <LockOutlinedIcon />
@@ -96,7 +100,7 @@ function Login() {
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Box sx={{display: "flex", justifyContent: "space-between"}}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -117,17 +121,21 @@ function Login() {
           Sign In
         </LoadingButton>
         <Grid container>
-          <Grid item xs>
-            <ForgotPassword />
-          </Grid>
           <Grid item>
-            <Link href="#" variant="body2" underline="none">
-              Don't have an account? Sign Up
+            <Link to="/signup" style={{ textDecoration: "none" }}>
+              <Button
+                sx={{ p: 0, color: "primary.main", textTransform: "none" }}
+              >
+                Don't have an account? Sign Up
+              </Button>
             </Link>
+          </Grid>
+          <Grid item xs sx={{textAlign: "end"}}>
+            <ForgotPassword />
           </Grid>
         </Grid>
       </Box>
-    </>
+    </Grow>
   );
 }
 
