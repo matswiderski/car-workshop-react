@@ -17,15 +17,22 @@ import Typography from "@mui/material/Typography";
 import Info from "./Info";
 import Grow from "@mui/material/Grow";
 import ForgotPassword from "./ForgotPassword";
+import FormHelperText from "@mui/material/FormHelperText";
+
 function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUser } = useAuth();
+  const [loginError, setloginError] = useState({
+    isOpen: false,
+    errors: [],
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setloginError({ isOpen: false, errors: [] });
     setLoading(true);
     const loginFormData = {
       emailAddress: email,
@@ -52,11 +59,14 @@ function Login() {
         "user-data",
         JSON.stringify({ token: response.data.token, email })
       );
-      setLoading(false);
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      console.log(error);
+      setloginError({
+        isOpen: true,
+        errors: error.response.data.errors.login,
+      });
     }
+    setLoading(false);
   };
 
   return (
@@ -87,6 +97,7 @@ function Login() {
           autoFocus
           variant="standard"
           onChange={(e) => setEmail(e.target.value)}
+          error={loginError.isOpen}
         />
         <TextField
           id="password"
@@ -99,7 +110,13 @@ function Login() {
           variant="standard"
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
+          error={loginError.isOpen}
         />
+        <FormHelperText error={loginError.isOpen} variant="standard">
+          {loginError.errors.map((msg, i) => {
+            return <li key={i}>{msg}</li>;
+          })}
+        </FormHelperText>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -130,7 +147,7 @@ function Login() {
               </Button>
             </Link>
           </Grid>
-          <Grid item xs sx={{textAlign: "end"}}>
+          <Grid item xs sx={{ textAlign: "end" }}>
             <ForgotPassword />
           </Grid>
         </Grid>

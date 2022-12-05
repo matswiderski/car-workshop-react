@@ -13,10 +13,12 @@ import FindWorkshop from "./components/pages/FindWorkshop";
 import AppLayout from "./components/layout/appLayout/AppLayout";
 import AuthLayout from "./components/layout/authLayout/AuthLayout";
 import Login from "./components/pages/auth/Login";
-import Register from "./components/pages/auth/Register"
+import Register from "./components/pages/auth/Register";
 import NoMatch from "./components/layout/NoMatch";
 import RequireAuth from "./components/RequireAuth";
-import UserDetails from "./components/pages/UserDetails/UserDetails";
+import Settings from "./components/pages/settings/Settings";
+import Notification from "./components/layout/Notification";
+import { NotificationContextProvider } from "./context/NotificationContext";
 
 function App() {
   const [theme, colorMode] = ThemeMode();
@@ -25,31 +27,34 @@ function App() {
       <ThemeContext.Provider value={colorMode}>
         <AuthContextProvider>
           <PageContextProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route element={<RequireAuth />}>
-                  <Route element={<AppLayout />}>
-                    <Route
-                      path="dashboard"
-                      element={<Dashboard pageName="Dashboard" />}
-                    />
-                    <Route
-                      path="/find"
-                      element={<FindWorkshop pageName="Find workshop" />}
-                    />
-                    <Route
-                      path="/user"
-                      element={<UserDetails pageName="User details" />}
-                    />
+            <NotificationContextProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route element={<RequireAuth />}>
+                    <Route element={<AppLayout />}>
+                      <Route
+                        path="dashboard"
+                        element={<Dashboard pageName="Dashboard" />}
+                      />
+                      <Route
+                        path="/find"
+                        element={<FindWorkshop pageName="Find workshop" />}
+                      />
+                      <Route
+                        path="/settings"
+                        element={<Settings pageName="Settings" />}
+                      />
+                    </Route>
                   </Route>
-                </Route>
-                <Route element={<AuthLayout />}>
-                  <Route path="/" element={<Login />} />
-                  <Route path="/signup" element={<Register />} />
-                </Route>
-                <Route path="*" element={<NoMatch />} />
-              </Routes>
-            </BrowserRouter>
+                  <Route element={<AuthLayout />}>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/signup" element={<Register />} />
+                  </Route>
+                  <Route path="*" element={<NoMatch />} />
+                </Routes>
+              </BrowserRouter>
+              <Notification />
+            </NotificationContextProvider>
           </PageContextProvider>
         </AuthContextProvider>
       </ThemeContext.Provider>

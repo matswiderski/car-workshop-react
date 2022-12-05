@@ -10,7 +10,7 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import useTheme from "@mui/material/styles/useTheme";
 import deepOrange from "@mui/material/colors/deepOrange";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import usePage from "../../hooks/usePage";
 import useAuth from "../../hooks/useAuth";
 
@@ -35,7 +35,7 @@ function TopBar() {
   const handleLogout = () => {
     auth.setUser({});
     localStorage.removeItem("user-data");
-    navigate("/", {replace: true});
+    navigate("/", { replace: true });
   };
 
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ function TopBar() {
           noWrap
           sx={{
             fontFamily: "monospace",
-            fontWeight: 600,
+            fontWeight: 550,
             letterSpacing: ".1rem",
             color: "inherit",
             transition: theme.transitions.create(["font-size", "transform"], {
@@ -146,6 +146,11 @@ function TopBar() {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
+          <Link to="/settings" style={{ textDecoration: "none", color: "inherit" }}>
+            <MenuItem key="Settings">
+              <Typography textAlign="center">Settings</Typography>
+            </MenuItem>
+          </Link>
           <MenuItem key="Logout" onClick={handleLogout}>
             <Typography textAlign="center">Logout</Typography>
           </MenuItem>
