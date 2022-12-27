@@ -1,10 +1,10 @@
-import { useContext, useEffect } from "react";
-import { PageContext } from "../Contexts";
+import { useEffect } from "react";
+import usePage from "../hooks/usePage";
 function FindWorkshop(props){
-    const pageContext = useContext(PageContext);
+    const page = usePage();
     useEffect(() => {
-        pageContext.setCurrentPageName(props.pageName)
-      }, []);
+      page.setCurrentPageName(props.pageName);
+    }, [page.currentPageName]);
     return(
         <>
         </>

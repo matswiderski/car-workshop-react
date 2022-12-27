@@ -1,4 +1,5 @@
-import { useState, useContext } from "react";
+import { useEffect, useState } from "react";
+import axios from "../../../api/axios";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -9,8 +10,10 @@ import Typography from "@mui/material/Typography";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import useTheme from "@mui/material/styles/useTheme";
 import deepOrange from "@mui/material/colors/deepOrange";
-
-import { PageContext } from "../Contexts";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import usePage from "../../hooks/usePage";
+import useAuth from "../../hooks/useAuth";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const notifications = ["1", "2", "3", "4"];
@@ -30,10 +33,26 @@ function TopBar() {
     setAnchorElNotifications(null);
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "auth/logout",
+      });
+      auth.setUser({});
+      localStorage.removeItem("user-data");
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNotifications, setAnchorElNotifications] = useState(null);
   const theme = useTheme();
-  const pageContext = useContext(PageContext);
+  const page = usePage();
+  const auth = useAuth();
   return (
     <Box
       sx={{
@@ -57,7 +76,7 @@ function TopBar() {
           noWrap
           sx={{
             fontFamily: "monospace",
-            fontWeight: 600,
+            fontWeight: 550,
             letterSpacing: ".1rem",
             color: "inherit",
             transition: theme.transitions.create(["font-size", "transform"], {
@@ -68,7 +87,7 @@ function TopBar() {
             },
           }}
         >
-          {pageContext.currentPageName}
+          {page.currentPageName}
         </Typography>
       </Box>
       <Box
@@ -116,7 +135,7 @@ function TopBar() {
                 fontSize: 15,
               }}
             >
-              M
+              {JSON.parse(auth.user).email.charAt(0).toUpperCase()}
             </Avatar>
           </IconButton>
         </Tooltip>
@@ -136,11 +155,17 @@ function TopBar() {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          {settings.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">{setting}</Typography>
+          <Link
+            to="/settings"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <MenuItem key="Settings">
+              <Typography textAlign="center">Settings</Typography>
             </MenuItem>
-          ))}
+          </Link>
+          <MenuItem key="Logout" onClick={handleLogout}>
+            <Typography textAlign="center">Logout</Typography>
+          </MenuItem>
         </Menu>
       </Box>
     </Box>

@@ -1,13 +1,13 @@
-import { useMemo, useState, createContext } from "react";
+import { useMemo, useState, createContext, useEffect } from "react";
 import { createTheme } from "@mui/material/styles";
 
 const colors = (mode) => {
   if (mode === "dark") {
     return {
       primary: {
-        main: "#5998C5",
-        light: "#3E6A8A",
-        dark: "#8BB7D6",
+        main: "#ff6384",
+        light: "#ff92a9",
+        dark: "#b3455c",
       },
       secondary: {
         main: "#FFF689",
@@ -18,9 +18,9 @@ const colors = (mode) => {
   } else {
     return {
       primary: {
-        main: "#5998C5",
-        light: "#8BB7D6",
-        dark: "#3E6A8A",
+        main: "#ff6384",
+        light: "#b3455c",
+        dark: "#ff92a9",
       },
       secondary: {
         main: "#FFF689",
@@ -47,8 +47,13 @@ export const ThemeContext = createContext({
   theme: {},
 });
 
-export function ThemeMode() {
-  const [mode, setMode] = useState("dark");
+export const ThemeMode = () => {
+  const [mode, setMode] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark"
+  );
+  useEffect(() => {
+    localStorage.setItem("theme", mode);
+  }, [mode]);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const colorMode = useMemo(
     () => ({
@@ -59,4 +64,4 @@ export function ThemeMode() {
     []
   );
   return [theme, colorMode];
-}
+};
