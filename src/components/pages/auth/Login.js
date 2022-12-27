@@ -25,14 +25,19 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUser } = useAuth();
-  const [loginError, setloginError] = useState({
+  const [loginError, setLoginError] = useState({
+    isOpen: false,
+    errors: [],
+  });
+  const [emailError, setEmailError] = useState({
     isOpen: false,
     errors: [],
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setloginError({ isOpen: false, errors: [] });
+    setLoginError({ isOpen: false, errors: [] });
+    setEmailError({ isOpen: false, errors: [] });
     setLoading(true);
     const loginFormData = {
       emailAddress: email,
@@ -61,9 +66,13 @@ function Login() {
       );
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      setloginError({
+      setLoginError({
         isOpen: true,
         errors: error.response.data.errors.login,
+      });
+      setEmailError({
+        isOpen: true,
+        errors: error.response.data.errors.EmailAddress,
       });
     }
     setLoading(false);
@@ -97,8 +106,13 @@ function Login() {
           autoFocus
           variant="standard"
           onChange={(e) => setEmail(e.target.value)}
-          error={loginError.isOpen}
+          error={emailError.isOpen}
         />
+        <FormHelperText error={emailError.isOpen} variant="standard">
+          {emailError.errors?.map((msg, i) => {
+            return <li key={i}>{msg}</li>;
+          })}
+        </FormHelperText>
         <TextField
           id="password"
           margin="normal"
@@ -113,7 +127,7 @@ function Login() {
           error={loginError.isOpen}
         />
         <FormHelperText error={loginError.isOpen} variant="standard">
-          {loginError.errors.map((msg, i) => {
+          {loginError.errors?.map((msg, i) => {
             return <li key={i}>{msg}</li>;
           })}
         </FormHelperText>
@@ -147,7 +161,7 @@ function Login() {
               </Button>
             </Link>
           </Grid>
-          <Grid item xs sx={{ textAlign: "end" }}>
+          <Grid item sx={{ textAlign: "end" }} ml={{ xs: 0, sm: 2 }}>
             <ForgotPassword />
           </Grid>
         </Grid>

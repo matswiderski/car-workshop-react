@@ -17,11 +17,20 @@ const privateInstance = axios.create({
 });
 
 instance.interceptors.request.use(async (request) => {
-  if (userData === null) return request;
-  request.headers.Authorization = `Bearer ${userData?.token}`;
-  const accessToken = jwt_decode(userData.token);
-  const isExpired = dayjs.unix(accessToken.exp).isBefore(dayjs());
-  if (!isExpired) return request;
+  if (userData === null){
+    userData = localStorage.getItem("user-data")
+      ? JSON.parse(localStorage.getItem("user-data"))
+      : null;
+    if (userData === null) return request;
+  }
+  console.log(userData);
+  const isTokenExpired = dayjs
+    .unix(jwt_decode(userData.token))
+    .isBefore(dayjs());
+  if (!isTokenExpired) {
+    request.headers.Authorization = `Bearer ${userData?.token}`;
+    return request;
+  }
   try {
     const response = await privateInstance({
       method: "post",

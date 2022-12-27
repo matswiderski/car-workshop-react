@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "../../../api/axios";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -32,10 +33,18 @@ function TopBar() {
     setAnchorElNotifications(null);
   };
 
-  const handleLogout = () => {
-    auth.setUser({});
-    localStorage.removeItem("user-data");
-    navigate("/", { replace: true });
+  const handleLogout = async () => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "auth/logout",
+      });
+      auth.setUser({});
+      localStorage.removeItem("user-data");
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const navigate = useNavigate();
@@ -146,7 +155,10 @@ function TopBar() {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <Link to="/settings" style={{ textDecoration: "none", color: "inherit" }}>
+          <Link
+            to="/settings"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <MenuItem key="Settings">
               <Typography textAlign="center">Settings</Typography>
             </MenuItem>

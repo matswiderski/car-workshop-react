@@ -181,7 +181,7 @@ function Register() {
             onChange={(e) => {
               setPersonal(true);
               setBusiness(false);
-              setAccountType(e.target.value);
+              setAccountType("personal");
             }}
             fullWidth
             sx={{ mr: 1 }}
@@ -197,7 +197,7 @@ function Register() {
             onChange={(e) => {
               setBusiness(true);
               setPersonal(false);
-              setAccountType(e.target.value);
+              setAccountType("business");
             }}
             fullWidth
             sx={{ ml: 1 }}
