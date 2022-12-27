@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import DirectionsCarFilledRoundedIcon from '@mui/icons-material/DirectionsCarFilledRounded';
 import ListItem from "@mui/material/ListItem";
 import { Link } from "react-router-dom";
 
@@ -126,8 +127,11 @@ function Nav() {
           <NavItem path="/dashboard" text="Dashboard" open={open}>
             <HomeRoundedIcon sx={{ fontSize: 20 }} />
           </NavItem>
-          <NavItem path="/find" text="Find workshop" open={open}>
+          <NavItem path="/repair" text="Repair" open={open}>
             <HomeRepairServiceRoundedIcon sx={{ fontSize: 20 }} />
+          </NavItem>
+          <NavItem path="/cars" text="Your cars" open={open}>
+            <DirectionsCarFilledRoundedIcon sx={{ fontSize: 20 }} />
           </NavItem>
         </List>
         <Divider sx={{ flexGrow: 1, mx: 1 }} />

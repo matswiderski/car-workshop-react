@@ -9,7 +9,7 @@ import { PageContextProvider } from "./context/PageContext";
 import { AuthContextProvider } from "./context/AuthContext";
 
 import Dashboard from "./components/pages/dashboard/Dashboard";
-import FindWorkshop from "./components/pages/FindWorkshop";
+import FindWorkshop from "./components/pages/Repair";
 import AppLayout from "./components/layout/appLayout/AppLayout";
 import AuthLayout from "./components/layout/authLayout/AuthLayout";
 import Login from "./components/pages/auth/Login";
@@ -19,6 +19,7 @@ import RequireAuth from "./components/RequireAuth";
 import Settings from "./components/pages/settings/Settings";
 import Notification from "./components/layout/Notification";
 import { NotificationContextProvider } from "./context/NotificationContext";
+import Cars from "./components/pages/Cars";
 
 function App() {
   const [theme, colorMode] = ThemeMode();
@@ -37,8 +38,12 @@ function App() {
                         element={<Dashboard pageName="Dashboard" />}
                       />
                       <Route
-                        path="/find"
-                        element={<FindWorkshop pageName="Find workshop" />}
+                        path="/repair"
+                        element={<FindWorkshop pageName="Repair" />}
+                      />
+                      <Route
+                        path="/cars"
+                        element={<Cars pageName="Your cars" />}
                       />
                       <Route
                         path="/settings"
