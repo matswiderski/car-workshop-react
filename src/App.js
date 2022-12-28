@@ -15,7 +15,7 @@ import AuthLayout from "./components/layout/authLayout/AuthLayout";
 import Login from "./components/pages/auth/Login";
 import Register from "./components/pages/auth/Register";
 import NoMatch from "./components/layout/NoMatch";
-import RequireAuth from "./components/RequireAuth";
+import RequireAuth from "./components/pages/auth/RequireAuth";
 import Settings from "./components/pages/settings/Settings";
 import Notification from "./components/layout/Notification";
 import { NotificationContextProvider } from "./context/NotificationContext";
