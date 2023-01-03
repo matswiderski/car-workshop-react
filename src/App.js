@@ -1,15 +1,12 @@
 import { ThemeProvider } from "@mui/material/styles";
-
 import CssBaseline from "@mui/material/CssBaseline";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "@fontsource/roboto/400.css";
-
 import { ThemeMode, ThemeContext } from "./components/layout/appLayout/Theme";
 import { PageContextProvider } from "./context/PageContext";
 import { AuthContextProvider } from "./context/AuthContext";
-
 import Dashboard from "./components/pages/dashboard/Dashboard";
-import FindWorkshop from "./components/pages/Repair";
+import Repairs from "./components/pages/repairs/Repairs";
 import AppLayout from "./components/layout/appLayout/AppLayout";
 import AuthLayout from "./components/layout/authLayout/AuthLayout";
 import Login from "./components/pages/auth/Login";
@@ -38,8 +35,8 @@ function App() {
                         element={<Dashboard pageName="Dashboard" />}
                       />
                       <Route
-                        path="/repair"
-                        element={<FindWorkshop pageName="Repair" />}
+                        path="/repair-center"
+                        element={<Repairs pageName="Repair center" />}
                       />
                       <Route
                         path="/cars"

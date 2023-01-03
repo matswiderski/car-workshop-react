@@ -1,5 +1,6 @@
 import { useMemo, useState, createContext, useEffect } from "react";
 import { createTheme } from "@mui/material/styles";
+import { grey } from '@mui/material/colors';
 
 const colors = (mode) => {
   if (mode === "dark") {
@@ -39,8 +40,31 @@ const themeSettings = (mode) => {
       primary: themeColors.primary,
       secondary: themeColors.secondary,
     },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+              backgroundColor: "#bdbdbd",
+              height: 10,
+              width: 10,
+              borderRadius: 5,
+            },
+            "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+              borderRadius: 5,
+              backgroundColor: "#757575",
+            },
+            "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover": {
+              backgroundColor: "#616161",
+            },
+          },
+        },
+      },
+    },
   };
 };
+
+
 
 export const ThemeContext = createContext({
   toggleColorMode: () => {},
