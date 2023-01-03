@@ -17,17 +17,16 @@ const privateInstance = axios.create({
 });
 
 instance.interceptors.request.use(async (request) => {
-  if (userData === null){
+  if (userData === null) {
     userData = localStorage.getItem("user-data")
       ? JSON.parse(localStorage.getItem("user-data"))
       : null;
     if (userData === null) return request;
   }
-  console.log(userData);
-  const isTokenExpired = dayjs
-    .unix(jwt_decode(userData.token))
+  const tokentExpired = dayjs
+    .unix(jwt_decode(userData.token).exp)
     .isBefore(dayjs());
-  if (!isTokenExpired) {
+  if (!tokentExpired) {
     request.headers.Authorization = `Bearer ${userData?.token}`;
     return request;
   }
@@ -42,7 +41,11 @@ instance.interceptors.request.use(async (request) => {
     localStorage.setItem("user-data", JSON.stringify(userData));
     request.headers.Authorization = `Bearer ${response.data.token}`;
   } catch (error) {
-    console.log(error);
+    if(error.response.status === 401)
+    {
+      localStorage.removeItem("user-data");
+      window.location.replace("/");
+    }
   }
   return request;
 });

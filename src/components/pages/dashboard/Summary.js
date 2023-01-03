@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import HardwareRoundedIcon from "@mui/icons-material/HardwareRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import CarRepairRoundedIcon from '@mui/icons-material/CarRepairRounded';
 import Zoom from "@mui/material/Zoom";
 import SummaryCard from "./SummaryCard";
 
@@ -22,8 +23,8 @@ function Summary() {
       <Zoom in={true} timeout={500} style={{ transitionDelay: '50ms' }}>
         <Grid item xs={12} sm={6} lg={3}>
           <Paper className="summary-card max-spent">
-            <SummaryCard text="Most expensive repair" value="420">
-              <AttachMoneyRoundedIcon className="icon" />
+            <SummaryCard text="Registered cars" value="2">
+              <CarRepairRoundedIcon className="icon" />
             </SummaryCard>
           </Paper>
         </Grid>

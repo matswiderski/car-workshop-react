@@ -7,12 +7,13 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import DirectionsCarFilledRoundedIcon from '@mui/icons-material/DirectionsCarFilledRounded';
 import ListItem from "@mui/material/ListItem";
 import { Link } from "react-router-dom";
 
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
-import HomeRepairServiceRoundedIcon from "@mui/icons-material/HomeRepairServiceRounded";
+import BuildIcon from '@mui/icons-material/Build';
 
 import ThemeButton from "./ThemeButton";
 import NavItem from "./NavItem";
@@ -90,17 +91,6 @@ function Nav() {
             minHeight: 60,
           }}
         >
-          <Box sx={{ mx: "auto", p: 0.5 }}>
-            <Link
-              to="/dashboard"
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-              }}
-            >
-              <ConstructionRoundedIcon sx={{ fontSize: 40 }} />
-            </Link>
-          </Box>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftRoundedIcon sx={{ fontSize: 30 }} />
           </IconButton>
@@ -124,10 +114,13 @@ function Nav() {
         <Divider sx={{ mx: 1 }} />
         <List>
           <NavItem path="/dashboard" text="Dashboard" open={open}>
-            <HomeRoundedIcon sx={{ fontSize: 20 }} />
+            <GridViewRoundedIcon sx={{ fontSize: 20 }} />
           </NavItem>
-          <NavItem path="/find" text="Find workshop" open={open}>
-            <HomeRepairServiceRoundedIcon sx={{ fontSize: 20 }} />
+          <NavItem path="/repair-center" text="Repair center" open={open}>
+            <BuildIcon sx={{ fontSize: 20 }} />
+          </NavItem>
+          <NavItem path="/cars" text="Your cars" open={open}>
+            <DirectionsCarFilledRoundedIcon sx={{ fontSize: 20 }} />
           </NavItem>
         </List>
         <Divider sx={{ flexGrow: 1, mx: 1 }} />
