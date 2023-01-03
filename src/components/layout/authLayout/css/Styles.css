@@ -1,0 +1,11 @@
+.auth-wrapper {
+  height: 100vh;
+}
+.lock {
+  background-color: #ff6384 !important;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+}
