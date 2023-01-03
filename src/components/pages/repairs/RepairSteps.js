@@ -25,6 +25,9 @@ import TableRow from "@mui/material/TableRow";
 import { useTheme } from "@emotion/react";
 import { grey } from "@mui/material/colors";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
+import useNotification from "../../hooks/useNotification";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import Stack from "@mui/material/Stack";
 
 const steps = ["Select car", "Chose workshop", "Provide details"];
 
@@ -40,11 +43,12 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-function RepairSteps() {
+function RepairSteps({setRepairs, repairs}) {
   const theme = useTheme();
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [activeStep, setActiveStep] = useState(0);
   const [stepCompleted, setStepCompleted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedCar, setSelectedCar] = useState({});
   const [selectedWorkshop, setSelectedWorkshop] = useState({});
   const [cars, setCars] = useState([]);
@@ -53,7 +57,7 @@ function RepairSteps() {
   const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
-
+  const notification = useNotification();
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
   const numberOfChecked = (items) => intersection(checked, items).length;
@@ -176,15 +180,12 @@ function RepairSteps() {
           headers: { "Content-Type": "application/json" },
         });
         setLeft(getServices.data);
-
         const getWorkshops = await axios({
           method: "get",
           url: "workshop/get-all",
           headers: { "Content-Type": "application/json" },
         });
         setWorkshops(getWorkshops.data);
-
-        console.group(workshops);
       } catch (error) {
         console.log(error);
       }
@@ -193,13 +194,13 @@ function RepairSteps() {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if (selectedCar.id !== "" && selectedWorkshop.id !== "")
+    if (selectedCar.id !== undefined && selectedWorkshop.id !== undefined)
       setStepCompleted(true);
     else setStepCompleted(false);
   };
 
   const handleBack = () => {
-    if (selectedCar.id !== "" || selectedWorkshop.id !== "")
+    if (selectedCar.id !== undefined || selectedWorkshop.id !== undefined)
       setStepCompleted(true);
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -215,6 +216,7 @@ function RepairSteps() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const repair = {
       car: selectedCar,
       workshop: selectedWorkshop,
@@ -228,7 +230,16 @@ function RepairSteps() {
         data: repair,
         headers: { "Content-Type": "application/json" },
       });
-      console.log(response);
+      setLoading(false);
+      notification.setNotification("Repair added successfully");
+      setRepairs([...repairs, response.data]);
+      setSelectedWorkshop({});
+      setSelectedCar({});
+      setActiveStep(0);
+      setStepCompleted(false);
+      setMessage("");
+      setLeft([...left, ...right]);
+      setRight([]);
     } catch (error) {
       console.log(error);
     }
@@ -253,43 +264,53 @@ function RepairSteps() {
       <React.Fragment>
         {
           {
-            0: (
-              <TableContainer
-                sx={{
-                  height: 300,
-                  overflow: "auto",
-                  mt: 5,
-                }}
-              >
-                <Table sx={{ width: "100%" }} stickyHeader>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>License Plate</TableCell>
-                      <TableCell>Brand</TableCell>
-                      <TableCell>Model</TableCell>
-                      <TableCell>Production year</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {cars.map((car) => {
-                      return (
-                        <TableRow
-                          key={car.id}
-                          selected={selectedCar.id === car.id}
-                          onClick={() => handleCarClick(car)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <TableCell>{car.licensePlate}</TableCell>
-                          <TableCell>{car.brand}</TableCell>
-                          <TableCell>{car.model}</TableCell>
-                          <TableCell>{car.productionYear}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            ),
+            0:
+              cars.length > 0 ? (
+                <TableContainer
+                  sx={{
+                    height: 300,
+                    overflow: "auto",
+                    mt: 5,
+                  }}
+                >
+                  <Table sx={{ width: "100%" }} stickyHeader>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>License Plate</TableCell>
+                        <TableCell>Brand</TableCell>
+                        <TableCell>Model</TableCell>
+                        <TableCell>Production year</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {cars.map((car) => {
+                        return (
+                          <TableRow
+                            key={car.id}
+                            selected={selectedCar.id === car.id}
+                            onClick={() => handleCarClick(car)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <TableCell>{car.licensePlate}</TableCell>
+                            <TableCell>{car.brand}</TableCell>
+                            <TableCell>{car.model}</TableCell>
+                            <TableCell>{car.productionYear}</TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                <Stack
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{ height: "400px" }}
+                >
+                  <InfoRoundedIcon />
+                  You haven't added any cars yet
+                </Stack>
+              ),
             1: (
               <TableContainer
                 sx={{
@@ -316,8 +337,12 @@ function RepairSteps() {
                           style={{ cursor: "pointer" }}
                         >
                           <TableCell>{workshop.name}</TableCell>
-                          <TableCell>{workshop.localization.latitude}</TableCell>
-                          <TableCell>{workshop.localization.longitude}</TableCell>
+                          <TableCell>
+                            {workshop.localization.latitude}
+                          </TableCell>
+                          <TableCell>
+                            {workshop.localization.longitude}
+                          </TableCell>
                         </TableRow>
                       );
                     })}
@@ -400,19 +425,15 @@ function RepairSteps() {
           <Box sx={{ flex: "1 1 auto" }} />
           {stepCompleted && activeStep + 1 < steps.length ? (
             <>
-              <LoadingButton
-                onClick={handleNext}
-                loading={false}
-                variant="contained"
-              >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              <LoadingButton onClick={handleNext} variant="contained">
+                Next
               </LoadingButton>
             </>
           ) : (
             <>
-              {activeStep + 1 === steps.length && (
+              {activeStep + 1 === steps.length && right.length > 0 && (
                 <LoadingButton
-                  loading={false}
+                  loading={activeStep === steps.length - 1 && loading}
                   variant="contained"
                   onClick={handleSubmit}
                 >
