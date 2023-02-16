@@ -14,7 +14,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import Person2Icon from "@mui/icons-material/Person2";
 import styled from "@mui/material/styles/styled";
-import axios from "../../../api/axios";
+import { useAxios } from "../../../api/axios";
 import { useNavigate } from "react-router-dom";
 import useNotification from "../../hooks/useNotification";
 import FormHelperText from "@mui/material/FormHelperText";
@@ -27,6 +27,7 @@ const CustomToggleButton = styled(ToggleButton)({
 });
 
 function Register() {
+  const { authInstance } = useAxios();
   const [loading, setLoading] = useState(false);
   const [personal, setPersonal] = useState(true);
   const [business, setBusiness] = useState(false);
@@ -67,7 +68,7 @@ function Register() {
     };
     try {
       setLoading(true);
-      const response = await axios({
+      const response = await authInstance({
         method: "post",
         url: "auth/signup",
         data: signupFormData,
