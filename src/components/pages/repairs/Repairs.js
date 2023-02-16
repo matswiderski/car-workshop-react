@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "../../../api/axios";
+import { useAxios } from "../../../api/axios";
 import usePage from "../../hooks/usePage";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -8,6 +8,7 @@ import RecentRepairs from "./RecentRepairs";
 import { Typography } from "@mui/material";
 function Repair(props) {
   const page = usePage();
+  const { privateInstance } = useAxios();
   const [repairs, setRepairs] = useState([]);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ function Repair(props) {
   useEffect(() => {
     (async function () {
       try {
-        const getRepairs = await axios({
+        const getRepairs = await privateInstance({
           method: "get",
           url: "repair/get-all",
           headers: { "Content-Type": "application/json" },

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "../../../api/axios";
+import { useState } from "react";
+import { useAxios } from "../../../api/axios";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -19,6 +19,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const notifications = ["1", "2", "3", "4"];
 
 function TopBar() {
+  const { privateInstance } = useAxios();
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -35,12 +36,11 @@ function TopBar() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios({
+      await privateInstance({
         method: "post",
         url: "auth/logout",
       });
-      auth.setUser({});
-      localStorage.removeItem("user-data");
+      logout();
       navigate("/", { replace: true });
     } catch (error) {
       console.log(error);
@@ -52,7 +52,7 @@ function TopBar() {
   const [anchorElNotifications, setAnchorElNotifications] = useState(null);
   const theme = useTheme();
   const page = usePage();
-  const auth = useAuth();
+  const { user, logout } = useAuth();
   return (
     <Box
       sx={{
@@ -135,7 +135,7 @@ function TopBar() {
                 fontSize: 15,
               }}
             >
-              {JSON.parse(auth.user).email.charAt(0).toUpperCase()}
+              {user.email.charAt(0).toUpperCase()}
             </Avatar>
           </IconButton>
         </Tooltip>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "../../../api/axios";
+import { useAxios } from "../../../api/axios";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -43,8 +43,9 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-function RepairSteps({setRepairs, repairs}) {
+function RepairSteps({ setRepairs, repairs }) {
   const theme = useTheme();
+  const { privateInstance } = useAxios();
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [activeStep, setActiveStep] = useState(0);
   const [stepCompleted, setStepCompleted] = useState(false);
@@ -167,20 +168,20 @@ function RepairSteps({setRepairs, repairs}) {
   useEffect(() => {
     (async function () {
       try {
-        const getCars = await axios({
+        const getCars = await privateInstance({
           method: "get",
           url: "car/get-all",
           headers: { "Content-Type": "application/json" },
         });
         setCars(getCars.data);
 
-        const getServices = await axios({
+        const getServices = await privateInstance({
           method: "get",
           url: "service/get-all",
           headers: { "Content-Type": "application/json" },
         });
         setLeft(getServices.data);
-        const getWorkshops = await axios({
+        const getWorkshops = await privateInstance({
           method: "get",
           url: "workshop/get-all",
           headers: { "Content-Type": "application/json" },
@@ -224,7 +225,7 @@ function RepairSteps({setRepairs, repairs}) {
       message,
     };
     try {
-      const response = await axios({
+      const response = await privateInstance({
         method: "post",
         url: "repair/create",
         data: repair,

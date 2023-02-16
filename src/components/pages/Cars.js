@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { useAxios } from "../../api/axios";
 import usePage from "../hooks/usePage";
 import { DataGrid } from "@mui/x-data-grid";
 import Grid from "@mui/material/Grid";
-import axios from "../../api/axios";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
@@ -19,8 +19,10 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import LinearProgress from "@mui/material/LinearProgress";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+
 function Cars(props) {
   const page = usePage();
+  const { privateInstance } = useAxios();
   useEffect(() => {
     page.setCurrentPageName(props.pageName);
   }, [page.currentPageName]);
@@ -56,7 +58,7 @@ function Cars(props) {
     (async function () {
       setDataLoading(true);
       try {
-        const response = await axios({
+        const response = await privateInstance({
           method: "get",
           url: "car/get-all",
           headers: { "Content-Type": "application/json" },
@@ -72,7 +74,7 @@ function Cars(props) {
     handleClose();
     setLoading(true);
     try {
-      const response = await axios({
+      const response = await privateInstance({
         method: "post",
         url: "car/delete",
         data: selectedRows,
@@ -109,7 +111,7 @@ function Cars(props) {
       };
     }
     try {
-      const response = await axios({
+      const response = await privateInstance({
         method: editMode ? "patch" : "post",
         url: editMode ? "car/update" : "car/create",
         data: carData,

@@ -32,7 +32,7 @@ function Summary() {
       <Zoom in={true} timeout={500} style={{ transitionDelay: '100ms' }}>
         <Grid item xs={12} sm={6} lg={3}>
           <Paper className="summary-card total-repairs">
-            <SummaryCard text="Repairs in total" value="69">
+            <SummaryCard text="Repairs in total" value="43">
               <HardwareRoundedIcon className="icon" />
             </SummaryCard>
           </Paper>

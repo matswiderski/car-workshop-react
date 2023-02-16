@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import axios from "../../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
@@ -18,13 +17,15 @@ import Info from "./Info";
 import Grow from "@mui/material/Grow";
 import ForgotPassword from "./ForgotPassword";
 import FormHelperText from "@mui/material/FormHelperText";
+import { useAxios } from "../../../api/axios";
 
 function Login() {
+  const { authInstance, privateInstance } = useAxios();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
   const [loginError, setLoginError] = useState({
     isOpen: false,
     errors: [],
@@ -33,7 +34,6 @@ function Login() {
     isOpen: false,
     errors: [],
   });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoginError({ isOpen: false, errors: [] });
@@ -44,28 +44,26 @@ function Login() {
       password: password,
     };
     try {
-      const response = await axios({
+      const response = await authInstance({
         method: "post",
         url: "auth/login",
         data: loginFormData,
         headers: { "Content-Type": "application/json" },
       });
-
-      axios.defaults.headers.common[
+      privateInstance.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${response.data.token}`;
-      setUser(
-        JSON.stringify({
-          token: response.data.token,
-          email,
-        })
-      );
+      setUser({
+        email,
+        token: response.data.token,
+      });
       localStorage.setItem(
         "user-data",
-        JSON.stringify({ token: response.data.token, email })
+        JSON.stringify({ email, token: response.data.token })
       );
       navigate("/dashboard", { replace: true });
     } catch (error) {
+      console.log(error);
       setLoginError({
         isOpen: true,
         errors: error.response.data.errors.login,
